@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Box, Typography, Radio, RadioGroup, FormControlLabel, FormControl, Button, Paper, useTheme } from '@material-ui/core';
+import React, { useState, useEffect} from 'react';
+import { Box, Typography, Radio, RadioGroup, FormControlLabel, FormControl, Button, Paper, Select, MenuItem, InputLabel, useTheme } from '@material-ui/core';
 import { tokens } from '../../Theme';
 import Header from '../../components/Header/Header.jsx';
+import axios from 'axios';
 
 const UpdateHub = () => {
     const theme = useTheme();
@@ -15,6 +16,24 @@ const UpdateHub = () => {
         // Add more questions as needed
     });
     const [allAnswered, setAllAnswered] = useState(false);
+    const [projects, setProjects] = useState([]);
+
+    useEffect(() => {
+        const employeeId = localStorage.getItem('cususerid');  // Fetch employee id from local storage
+        if (employeeId) {
+          const url = `http://localhost:8000/projects/employee/${employeeId}/`;
+          axios.get(url)  // Use employee id in API URL
+            .then(response => {
+              setProjects(response.data);
+            })
+            .catch(error => {
+              console.error('There was an error!', error);
+            });
+        } else {
+          console.error('Employee ID is null');
+        }
+      }, []);
+
 
     const handleChange = (event) => {
         setAnswers({ ...answers, [event.target.name]: event.target.value });
@@ -30,7 +49,20 @@ const UpdateHub = () => {
     return (
         <Box style={{ width: '90%', marginTop: '-140px' }}>
             <Header title="Updates Hub" variant="h1" style={{ fontSize: '5em', fontWeight: 'bold' }} />
-
+            <FormControl>
+        <InputLabel id="project-select-label">Project</InputLabel>
+        <Select
+          labelId="project-select-label"
+          id="project-select"
+          value={answers.project}
+          onChange={handleChange}
+          name="project"
+        >
+          {projects.map((project) => (
+            <MenuItem key={project.id} value={project.id}>{project.name}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
             <FormControl component="fieldset" style={{ width: '100%' }}>
                 <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[100] }}>
