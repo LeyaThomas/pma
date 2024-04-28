@@ -54,20 +54,30 @@ function ProjectButton() {
         console.log(error);
       });
   };
+
   const handleJoinProject = () => {
-    const employeeId = localStorage.getItem("cususerid");
+    const employeeId = parseInt(localStorage.getItem("cususerid"));
+    const projectIdValue = parseInt(projectId); // Parse projectId to integer
+  
+    console.log(`Employee ID: ${employeeId}, Project ID: ${projectIdValue}`);
+  
+    const data = {
+      employee_id: employeeId,
+      project_id: projectIdValue,
+    };
+  
+    console.log("Sending the following data to the server:", data);
+  
     axios
-      .post("http://localhost:8000/projects/projectemployee/", {
-        project: projectId,
-        employee: employeeId,
-      })
+      .post("http://localhost:8000/projects/projectemployee/", data)
       .then((response) => {
-        alert("Successfully joined the project!");
+        console.log(response.data);
+        alert("You have successfully joined the project");
         handleClose();
       })
       .catch((error) => {
-        console.error(error);
-        alert("Failed to join the project. Please try again.");
+        console.log(error);
+        alert("Failed to join the project");
       });
   };
 
