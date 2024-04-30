@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, TextField, FormControlLabel, Radio, RadioGroup, Select, MenuItem } from '@material-ui/core';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -55,8 +56,8 @@ function Signup() {
   };
 
   return (
-    <form onSubmit={signUp}>
-      <div>
+    <form onSubmit={signUp} style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+      <div style={{ gridColumn: 'span 4' }}>
         <RadioGroup row value={role} onChange={e => setRole(e.target.value)}>
           <FormControlLabel value="admin" control={<Radio />} label="Admin" />
           <FormControlLabel value="employee" control={<Radio />} label="Employee" />
@@ -183,9 +184,10 @@ function Signup() {
           </FormControl>
         )}
       </div>
-      <button type="submit">Sign Up</button>
-      {error && <p>{error}</p>}
-      {successMessage && <p>{successMessage}</p>}
+      <button type="submit" style={{ gridColumn: 'span 4' }}>Sign Up</button>
+      <Link to="/login" style={{ gridColumn: 'span 4' }}>Already have an account? Log in</Link>
+      {error && <p style={{ gridColumn: 'span 4' }}>{error}</p>}
+      {successMessage && <p style={{ gridColumn: 'span 4' }}>{successMessage}</p>}
     </form>
   );
 }
