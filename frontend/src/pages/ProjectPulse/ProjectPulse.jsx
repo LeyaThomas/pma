@@ -15,6 +15,8 @@ const ProjectPulse = () => {
   const [status, setStatus] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [message, setMessage] = useState('');
+
 
   useEffect(() => {
     const employeeId = localStorage.getItem('cususerid');  // Fetch employee id from local storage
@@ -113,10 +115,18 @@ const ProjectPulse = () => {
 
   const handleSubmit = () => {
     console.log(`Update status of project with id ${editingId} to ${status}`);
+    const url = `http://localhost:8000/projects/project/${editingId}/update-status/`;
+    axios.put(url, { status })
+      .then(response => {
+        console.log(response.data);
+        setMessage('Updated successfully'); // Set the message
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+        setMessage('There was an error!'); // Set the message
+      });
     setOpen(false);
-    navigate('/catalog');
   };
-
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
