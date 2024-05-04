@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import { tokens } from '../../Theme';
+import axios from 'axios';
 
 const Timeline = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode)
+  const [data, setData] = useState([]);
 
-  // Mock data
-  const mockData = [
-    { period: '1998 - 2000', title: 'Title' },
-    { period: '2000 - 2002', title: 'Title' },
-    { period: '2002 - 2004', title: 'Title' },
-    { period: '2004 - 2006', title: 'Title' },
-    { period: '2006 - 2008', title: 'Title' },
-  ];
-
+  useEffect(() => {
+    const employeeId = localStorage.getItem('cususerid'); // Fetch the employee id from the local storage
+  
+    axios.get(`http://localhost:8000/projects/employee/${employeeId}/projects/deadlines/`) // Use the employee id in the API call
+      .then(response => {
+        const timelineData = response.data.map(item => ({
+          period: item.project.deadline,
+          title: item.project.name,
+          content: item.project.status,
+        }));
+        setData(timelineData);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }, []);
   return (
     <Box
       sx={{
@@ -81,11 +90,11 @@ const Timeline = () => {
         },
       }}
     >
-      {mockData.map((d, i) => (
+      {data.map((d, i) => (
         <div className="timeline-content" key={i}>
           <div className="timeline-period">{d.period}</div>
           <div className="timeline-title">{d.title}</div>
-          Lorem ipsum dolor sit.
+          {d.content}
           
         </div>
       ))}

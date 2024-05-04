@@ -16,7 +16,15 @@ const RealTimePieChart = () => {
       axios.get(`http://localhost:8000/projects/employee-projects/${employeeId}/`)
         .then(response => {
           const projects = response.data;
+          projects.sort((a, b) => {
+            if (a.status === 'Not Started' && b.status !== 'Not Started') return -1;
+            if (a.status === 'In Progress' && b.status === 'Completed') return -1;
+            if (b.status === 'Not Started' && a.status !== 'Not Started') return 1;
+            if (b.status === 'In Progress' && a.status === 'Completed') return 1;
+            return 0;
+          });
           const pieChartData = projects.map(project => ({
+            id: project.id,
             name: project.name,
             status: project.status
           }));
@@ -47,8 +55,8 @@ const RealTimePieChart = () => {
       .attr('transform', `translate(${(width / 2) - 50}, ${height / 2})`); // Move 50 units to the left
 
     const color = d3.scaleOrdinal()
-      .domain(['Finished', 'In Progress', 'Not Started'])
-      .range([colors.blueAccent[500], "white", colors.greenAccent[500]]);
+      .domain(['Completed', 'In Progress', 'Not Started'])
+      .range([colors.greenAccent[500], "white", colors.blueAccent[500]]);
 
     const pie = d3.pie().value(d => d.status === 'Finished' ? 1 : 0.5);
     const path = d3.arc().outerRadius(radius - 10).innerRadius(0);
