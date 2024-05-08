@@ -7,7 +7,7 @@ import {
   Routes,
   Navigate
 } from "react-router-dom";
-import {Bar, Calendar, Contacts, Dashboard, Expense, FAQ, Geography, Line, Login, ProjectPulse, Signup, Team, UpdateHub } from "./pages";
+import {Bar, Calendar,  Dashboard, FAQ,  Login, ProjectPulse, Signup,  UpdateHub } from "./pages";
 import { ProjectButton, ProtectedRoute, Sidebar, Topbar } from "./components";
 import ProjectCatalog from "./pages/ProjectCatalog/ProjectCatalog";
 
@@ -48,18 +48,17 @@ function ProtectedRoutes({ setIsCollapsed, isCollapsed }) {
         <Sidebar isCollapsed={isCollapsed} />
         <div style={{ flex: 1 }}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/contacts" element={<Contacts />} />
-            <Route path="/expense" element={<Expense />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            
+            
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/geography" element={<Geography />} />
-            <Route path="/update" element={<UpdateHub />} />
-            <Route path="/line" element={<Line />} />
+            
+            <Route path="/update/:id" element={<UpdateHub />} />
+            
             <Route path="/pulse" element={<ProjectPulse />} />
             <Route path="/catalog/:id" element={<ProjectCatalog />} />
-            <Route path="/bar" element={<Bar />} /> 
+            <Route path="/bar/:id" element={<Bar />} /> 
           </Routes>
           <ProjectButton/>
         </div>

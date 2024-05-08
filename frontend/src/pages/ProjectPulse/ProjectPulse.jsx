@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme } from "@mui/material";
+import { useTheme, Typography } from "@mui/material";
 import { DataGrid } from '@material-ui/data-grid';
 import { Box, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
@@ -55,12 +55,12 @@ const ProjectPulse = () => {
     }
   }, []);
   const columns = [
-    { field: 'id', headerName: 'Project ID', width: 170 },
-    { field: 'name', headerName: 'Project Name', width: 230 },
-    { 
-      field: 'status', 
-      headerName: 'Status', 
-      width: 200,
+    { field: 'id', headerName: 'Project ID', width: 150 },
+    { field: 'name', headerName: 'Project Name', width: 190 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 170,
       renderCell: (params) => (
         <div>
           {params.value}
@@ -70,37 +70,52 @@ const ProjectPulse = () => {
         </div>
       ),
     },
-    { field: 'deadline', headerName: 'Deadline', width: 200 },
+    { field: 'deadline', headerName: 'Deadline', width: 170 },
     {
-        field: 'details',
-        headerName: 'Details',
-        width: 200,
-        renderCell: (params) => (
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            component={Link}
-            to={`/catalog/${params.row.id}`}
-          >
-            View Details
-          </Button>
-        ),
-      },
-      {
-        field: 'graph',
-        headerName: 'Graph',
-        width: 150,
-        renderCell: (params) => (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleShowGraph(params.row.id)}
-          >
-            Show Graph
-          </Button>
-        ),
-      },
+      field: 'details',
+      headerName: 'Details',
+      width: 200,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          component={Link}
+          to={`/catalog/${params.row.id}`}
+        >
+          View Details
+        </Button>
+      ),
+    },
+    {
+      field: 'graph',
+      headerName: 'Graph',
+      width: 170,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleShowGraph(params.row.id)}
+        >
+          Show Graph
+        </Button>
+      ),
+    },
+    {
+      field: 'fiveQAssess',
+      headerName: 'FiveQ Assess',
+      width: 190,
+      // Add any other properties you need for this column
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleUpdate(params.row.id)}
+        >
+          Update
+        </Button>
+      ),
+    },
   ];
 
   const handleEdit = (id, currentStatus) => {
@@ -132,31 +147,52 @@ const ProjectPulse = () => {
   };
 
   const handleShowGraph = (id) => {
-    console.log(`Show graph for project with id ${id}`);
+    navigate(`/bar/${id}`);
+  };
+  const handleUpdate = (id) => {
+    navigate(`/update/${id}`);
   };
 
   return (
-    <Box style={{ height: 400, width: '90%', marginLeft: '6%', backgroundColor: colors.primary[400], borderRadius: '5px',color: `${colors.greenAccent[200]} !important` }}>
-      <DataGrid rows={projects} columns={columns} pageSize={5} />
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit Status</DialogTitle>
-        <DialogContent>
-          <Select value={status} onChange={handleChange}>
-            <MenuItem value={'Not Started'}>Not Started</MenuItem>
-            <MenuItem value={'In Progress'}>In Progress</MenuItem>
-            <MenuItem value={'Completed'}>Completed</MenuItem>
-          </Select>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} color="primary">
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
+    <>
+      <Typography
+        variant="h4"
+        component="h2"
+        gutterBottom
+        sx={{
+          position: 'absolute',
+          marginTop: '-100px',
+          marginLeft: '90px',
+          fontSize: '40px',
+          color: colors.greenAccent[500],
+          // textDecoration: `underline ${colors.blueAccent[500]}`,
+        }}
+      >
+        Project Overview
+      </Typography>
+      <Box style={{position: 'relative', height: 400, width: '90%', marginLeft: '6%', backgroundColor: colors.primary[400], borderRadius: '5px', color: `${colors.greenAccent[200]} !important` }}>
+
+        <DataGrid rows={projects} columns={columns} pageSize={5} />
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Edit Status</DialogTitle>
+          <DialogContent>
+            <Select value={status} onChange={handleChange}>
+              <MenuItem value={'Not Started'}>Not Started</MenuItem>
+              <MenuItem value={'In Progress'}>In Progress</MenuItem>
+              <MenuItem value={'Completed'}>Completed</MenuItem>
+            </Select>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSubmit} color="primary">
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
+    </>
   );
 };
 

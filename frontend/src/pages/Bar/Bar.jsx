@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+
 import Typography from '@material-ui/core/Typography';
+import { useParams } from 'react-router-dom';
 import * as d3 from 'd3';
+import StarIcon from '@material-ui/icons/Star';
+
 import { useTheme } from '@mui/material';
 import { tokens } from '../../Theme';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => {
-    const colors = tokens(theme.palette.mode); // generate colors using tokens function
 
     return {
         root: {
+            flexGrow: 1,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -19,50 +22,59 @@ const useStyles = makeStyles((theme) => {
             height: '80vh',
             backgroundColor: colors.primary[500], // Set background color to primary color from theme
         },
-        paper: {
-            width: '60%',
-            marginTop: theme.spacing(-16), // Add some top margin
-            padding: theme.spacing(2),
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.primary[500], // Set background color to transparent
-        },
         chartContainer: {
-            height: 500,
-            backgroundColor: 'transparent', // Set background color to primary[100] from theme
+            display: 'inline-block',
+            width: '70%',
+        },
+        indicators: {
+            position: 'absolute',
+            top: '350px',
+            right: '60px',
+            fontFamily: 'Arial, sans-serif',
+            fontSize: '16px',
+            fontWeight: 'bold',
         },
     };
 });
 
-const getEmployeeName = async (id) => {
-    const response = await axios.get('http://localhost:8000/projects/project/9/employees/');
-    const employee = response.data.find(emp => emp.id === id);
-    return employee ? employee.name : 'Unknown';
-}
+
 const BarChartPage = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const { projectId } = useParams();
     const classes = useStyles();
     const [data, setData] = useState([]);
+    const { id } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:8000/projects/employeeanswer/')
-            .then(async response => {
-                const transformedData = await Promise.all(response.data.map(async item => ({
-                    name: await getEmployeeName(item.employee),
-                    value: item.mark,
-                })));
-                setData(transformedData);
+        console.log("Project ID: ", projectId);
+        axios.get(`http://localhost:8000/projects/project/${id}/marks/`)
+            .then(response => {
+                const markData = response.data;
+                return axios.get(`http://localhost:8000/projects/project/${id}/employees/`)
+                    .then(response => {
+                        const employeeData = response.data;
+                        const transformedData = markData.map(item => {
+                            const employee = employeeData.find(emp => emp.employee.id === item.employee);
+                            return {
+                                name: employee ? employee.employee.name : `Employee ${item.employee}`,
+                                value: item.mark,
+                            };
+                        });
+                        setData(transformedData);
+                    });
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
-    }, []);
+    }, [id, projectId]);
+
 
     useEffect(() => {
         if (data.length > 0) {
-            const margin = { top: 20, right: 20, bottom: 50, left: 50 };
-            const width = 500 - margin.left - margin.right;
+            d3.select("#barChart").selectAll("*").remove(); // Add this line
+            const margin = { top: 20, right: 20, bottom: 50, left: 250 };
+            const width = 790 - margin.left - margin.right;
             const height = 500 - margin.top - margin.bottom;
 
             const x = d3.scaleBand()
@@ -74,45 +86,58 @@ const BarChartPage = () => {
                 .domain([0, d3.max(data, d => d.value)])
                 .range([height, 0]);
 
-            d3.select('#barChart').selectAll('svg').remove(); // Remove existing SVG
+            const svg = d3.select("#barChart")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
 
-            const svg = d3.select('#barChart')
-                .append('svg')
-                .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
-                .append('g')
-                .attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-            svg.selectAll('rect')
+                svg.selectAll(".bar")
                 .data(data)
-                .enter()
-                .append('rect')
-                .attr('x', d => x(d.name))
-                .attr('y', d => y(d.value))
-                .attr('width', x.bandwidth())
-                .attr('height', d => height - y(d.value))
-                .attr('fill', 'steelblue');
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.name))
+                .attr("width", x.bandwidth())
+                .attr("y", d => y(d.value))
+                .attr("height", d => height - y(d.value))
+                .attr("fill", function(d) {  // fill each bar with a color based on its y-value
+                    if (d.value === 5) return 'gold';
+                    else if (d.value === 4) return 'silver';
+                    else if (d.value === 3) return 'white';
+                    else if (d.value === 2) return 'green';
+                    else if (d.value === 1) return 'red';
+                    else return 'black';  // default color
+                });
 
-            svg.append('g')
-                .attr('transform', `translate(0, ${height})`)
-                .call(d3.axisBottom(x))
-                .selectAll('text')
-                .attr('fill', '#ffffff'); // Change the color of the x-axis text
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x));
 
-            svg.append('g')
-                .call(d3.axisLeft(y))
-                .selectAll('text')
-                .attr('fill', '#ffffff'); // Change the color of the y-axis text
+            svg.append("g")
+                .call(d3.axisLeft(y));
         }
     }, [data]);
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <Typography variant="h4" align="center" gutterBottom>
-                </Typography>
-                <div id="barChart" className={classes.chartContainer} />
-            </Paper>
+            <Typography
+                variant="h4"
+                align="left"
+                position="absolute"
+                gutterBottom
+                style={{ color: colors.greenAccent[500], marginLeft: '-730px', marginTop: '-115px', fontWeight: 'bold', fontSize: '40px'}}
+            >
+                Response Analytics Chart
+            </Typography>
+            <div id="barChart" className={classes.chartContainer} style={{ marginLeft: '-330px', marginBottom: '20px',marginTop:'55px' }} />
+            <div className={classes.indicators} style={{ marginLeft: '20px' }}>
+                <p><StarIcon style={{ color: 'gold' }} /> - Exceptional Performance</p>
+                <p><StarIcon style={{ color: 'silver' }} /> - Very Competent</p>
+                <p><StarIcon style={{ color: 'bronze' }} /> - Satisfactory Performance</p>
+                <p><StarIcon style={{ color: 'green' }} /> - Adequate but Needs Work</p>
+                <p><StarIcon style={{ color: 'red' }} /> - Room for Improvement</p>
+            </div>
         </div>
     );
 };

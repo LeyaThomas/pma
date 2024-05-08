@@ -53,18 +53,18 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const menuItems = [
     { title: "Dashboard", to: "/dashboard", icon: <HomeOutlinedIcon /> },
-    { title: "Manage Team", to: "/team", icon: <PeopleOutlinedIcon /> },
-    { title: "Contacts Information", to: "/contacts", icon: <ContactsOutlinedIcon /> },
-    { title: "Project Expenses", to: "/expense", icon: <ReceiptOutlinedIcon /> },
+    // { title: "Manage Team", to: "/team", icon: <PeopleOutlinedIcon /> },
+    // { title: "Contacts Information", to: "/contacts", icon: <ContactsOutlinedIcon /> },
+    // { title: "Project Expenses", to: "/expense", icon: <ReceiptOutlinedIcon /> },
     { title: "Calendar", to: "/calendar", icon: <CalendarTodayOutlinedIcon /> },
-    { title: "Update Hub", to: "/update", icon: <UpdateIcon /> },
-    { title: "Ranking Chart", to: "/bar", icon: <BarChartOutlinedIcon /> },
-    { title: "Team Karma", to: "/pie", icon: <PieChartOutlinedIcon /> },
-    { title: "Profit Analysis", to: "/line", icon: <TimelineOutlinedIcon /> },
-    { title: "Geography Chart", to: "/geography", icon: <MapOutlinedIcon /> },
+    // // { title: "Update Hub", to: "/update", icon: <UpdateIcon /> },
+    // { title: "Ranking Chart", to: "/bar", icon: <BarChartOutlinedIcon /> },
+    // { title: "Team Karma", to: "/pie", icon: <PieChartOutlinedIcon /> },
+    // { title: "Profit Analysis", to: "/line", icon: <TimelineOutlinedIcon /> },
+    // { title: "Geography Chart", to: "/geography", icon: <MapOutlinedIcon /> },
+    { title: "Project Overview", to: "/pulse", icon: <AssessmentOutlinedIcon />},
+    //  { title: "Catalog", to: "/catalog/:id", icon: <LibraryBooksOutlinedIcon /> },
     { title: "FAQ Page", to: "/faq", icon: <HelpOutlineOutlinedIcon /> },
-    { title: "Assessment", to: "/pulse", icon: <AssessmentOutlinedIcon />},
-    { title: "Catalog", to: "/catalog/:id", icon: <LibraryBooksOutlinedIcon /> },
     { title: "Logout", to: "/logout", icon: <LogoutIcon /> },
     
   ];
@@ -74,7 +74,7 @@ const Sidebar = () => {
     <Box
       sx={{
         height: "100vh",
-        marginTop: '-170px', 
+        marginTop: '-125px', 
         "& .pro-sidebar-inner": {
           backgroundColor: "transparent !important",
         },

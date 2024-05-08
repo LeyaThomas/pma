@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { useTheme } from "@mui/material";
+import { useTheme, Typography } from "@mui/material";
+import { styled } from '@mui/system';
 import { tokens } from "../../Theme";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
+const StyledDataGrid = styled(DataGrid)({
+  '& .MuiDataGrid-cell': {
+    fontSize: '1.2em',
+  },
+  '& .MuiDataGrid-columnHeaderLabel': {
+    fontSize: '1.2em',
+  },
+});
 const ProjectCatalog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [rows, setRows] = useState([]);
   const { id } = useParams();
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,13 +51,16 @@ const ProjectCatalog = () => {
   ];
 
   return (
-    <div style={{ height: '500px', width: '80%', marginLeft: '130px', backgroundColor: colors.primary[400], color: `${colors.greenAccent[200]} !important` }}>
-      <DataGrid 
-        rows={rows} 
-        columns={columns} 
-        pageSize={5} 
-      />
-    </div>
+    <>
+      <Typography variant="h1" style={{ marginTop: '-120px', position: 'absolute', paddingLeft: '135px', color: colors.greenAccent[500] }}>Team Details</Typography>
+      <div style={{ height: '400px', position: 'relative',marginTop: '-35px', width: '80%', marginLeft: '130px', backgroundColor: colors.primary[400], color: `${colors.greenAccent[200]} !important` }}>
+      <StyledDataGrid 
+          rows={rows} 
+          columns={columns} 
+          pageSize={5} 
+        />
+      </div>
+    </>
   );
 };
 

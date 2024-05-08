@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from '../Theme';
 import * as d3 from 'd3';
 import axios from 'axios';
@@ -89,7 +89,7 @@ const RealTimePieChart = () => {
           .style('left', (event.pageX + 10) + 'px');
       })
       .on('mouseout', () => tooltip.style('visibility', 'hidden'));
-      
+
 
     // Add legend
     const legend = svg.selectAll('.legend')
@@ -99,7 +99,7 @@ const RealTimePieChart = () => {
       .attr('transform', (d, i) => `translate(0,${i * 20})`);
 
     legend.append('rect')
-      .attr('x', width - 18- 270)
+      .attr('x', width - 18 - 270)
       .attr('width', 18)
       .attr('height', 18)
       .style('fill', color);
@@ -119,12 +119,27 @@ const RealTimePieChart = () => {
       height="350px"
       marginTop="10px"
       display="flex"
+      flexDirection="column"
       justifyContent="center"
-      
       alignItems="center"
       backgroundColor={colors.primary[400]}
       ref={ref}
-    />
+    >
+      <Typography
+        variant="h4"
+        component="h2"
+        gutterBottom
+        sx={{
+          textAlign: 'left',
+          color: colors.greenAccent[300],
+          marginLeft: '-300px',
+          marginTop: '20px',
+          fontSize: '25px'
+        }}
+      >
+        Performance Analysis Pie
+      </Typography>
+    </Box>
   );
 };
 

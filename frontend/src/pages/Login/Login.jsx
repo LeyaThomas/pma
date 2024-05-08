@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { TextField, Button, Typography, Container } from '@mui/material';
+import { TextField, Button, Typography, Container, useTheme } from '@mui/material';
+import {tokens } from "../../Theme";
 import api from '../../api';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../constants';
 
 const Login = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -36,7 +40,7 @@ const Login = () => {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', marginTop: '10px' }}>
       <Container component="main" maxWidth="xs">
         <div style={{ textAlign: 'center' }}>
-          <Typography component="h1" variant="h4" style={{ fontWeight: 'bold', marginBottom: '16px' }}>
+          <Typography component="h1" variant="h4" style={{ fontWeight: 'bold',fontSize:'30px', marginBottom: '16px' }}>
             Log In to your Account
           </Typography>
           <form style={{ width: '100%', marginTop: '8px' }} onSubmit={handleLogin}>
@@ -73,8 +77,8 @@ const Login = () => {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
-              style={{ marginBottom: '16px' }}
+              color="inherit"
+              style={{ backgroundColor: colors.blueAccent[500], color: 'white', marginBottom: '16px' , width:'50%'}}
             >
               Log In
             </Button>
