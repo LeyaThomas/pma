@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
 import { useParams } from 'react-router-dom';
 import * as d3 from 'd3';
 import StarIcon from '@material-ui/icons/Star';
-
 import { useTheme } from '@mui/material';
 import { tokens } from '../../Theme';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => {
+
+
+    const colors = tokens(theme.palette.mode); // generate colors using tokens function
 
     return {
         root: {

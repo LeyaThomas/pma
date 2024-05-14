@@ -26,13 +26,19 @@ const ProjectCatalog = () => {
       try {
         const response = await axios.get(`http://localhost:8000/projects/project/${id}/employees/`);
         console.log(response.data);
-        const data = response.data.map(item => ({
-          id: item.id,
-          name: item.name,
-          email: item.email,
-          phone: item.phone_number,
-          address: item.address,
-        }));
+        const data = response.data.map(item => {
+          const employee = item.employee;
+          if (employee.id == null) {
+            console.log('Employee without id: ', employee);
+          }
+          return {
+            id: employee.id,
+            name: employee.name,
+            email: employee.email,
+            phone: employee.phone_number,
+            address: employee.address,
+          };
+        });
         setRows(data);
       } catch (error) {
         console.error('Error fetching data: ', error);
