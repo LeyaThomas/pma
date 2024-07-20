@@ -25,7 +25,7 @@ const UpdateHub = () => {
     useEffect(() => {
         const employeeId = localStorage.getItem('cususerid');  // Fetch employee id from local storage
         if (employeeId) {
-            const url = `http://localhost:8000/projects/employee/${employeeId}/`;
+            const url = process.env.REACT_APP_API_URL + `/projects/employee/${employeeId}/`;  // API URL
             axios.get(url)  // Use employee id in API URL
                 .then(response => {
                     setProjects(response.data);
@@ -55,7 +55,7 @@ const UpdateHub = () => {
         // Send answers to backend
         const employeeId = localStorage.getItem('cususerid');  // Fetch employee id from local storage
         if (employeeId) {
-            const url = 'http://localhost:8000/projects/employeeanswer/';  // Use employee id in API URL
+            const url = process.env.REACT_APP_API_URL + `/projects/employeeanswer/`;
             const data = {
                 ...answers,
                 employee: employeeId,  // Include employee id in the data

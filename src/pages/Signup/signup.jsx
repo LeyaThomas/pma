@@ -27,7 +27,7 @@ const SignUp = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/users/companies/');
+        const response = await axios.get(process.env.REACT_APP_API_URL + '/users/companies/'); 
         setCompanies(response.data);
       } catch (error) {
         console.error('Failed to fetch companies:', error);
@@ -67,7 +67,7 @@ const SignUp = () => {
         company: companyData,
       };
 
-      const response = await axios.post('http://localhost:8000/api/user/register/', data);
+      const response = await axios.post(process.env.REACT_APP_API_URL + 'api/user/register/', data);
 
       console.log(response);
 

@@ -22,7 +22,7 @@ const ProjectPulse = () => {
     const employeeId = localStorage.getItem('cususerid');  // Fetch employee id from local storage
     if (employeeId) {
       console.log('employeeId:', employeeId);  // Log employeeId
-      const url = `http://localhost:8000/projects/employee/${employeeId}/`;
+      const url = process.env.REACT_APP_API_URL + `/projects/employee/${employeeId}/`;  // API URL  
       console.log('Request URL:', url);  // Log request URL
       axios.get(url)  // Use employee id in API URL
         .then(response => {
@@ -130,7 +130,7 @@ const ProjectPulse = () => {
 
   const handleSubmit = () => {
     console.log(`Update status of project with id ${editingId} to ${status}`);
-    const url = `http://localhost:8000/projects/project/${editingId}/update-status/`;
+    const url = process.env.REACT_APP_API_URL + `/projects/project/${editingId}/update-status/`;
     axios.put(url, { status })
       .then(response => {
         console.log(response.data);
