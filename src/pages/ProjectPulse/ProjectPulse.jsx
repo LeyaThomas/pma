@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme, Typography } from "@mui/material";
-import { DataGrid } from '@material-ui/data-grid';
-import { Box, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from '@material-ui/core';
+import { DataGrid } from '@mui/x-data-grid';
+import { Box, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 import { tokens } from "../../Theme";
 import axios from 'axios';
 

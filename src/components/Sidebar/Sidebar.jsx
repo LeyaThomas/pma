@@ -4,7 +4,7 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../Theme"
-import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
+import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
 import {
   HomeOutlined as HomeOutlinedIcon,
   PeopleOutlined as PeopleOutlinedIcon,
@@ -20,7 +20,7 @@ import {
   ExitToAppOutlined as LogoutIcon,
   UpdateOutlined as UpdateIcon,
   AssessmentOutlined as AssessmentOutlinedIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 const Item = ({ title, to, icon, selected, setSelected, onPress }) => {
   const navigate = useNavigate();

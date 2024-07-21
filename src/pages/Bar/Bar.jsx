@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@mui/styles';
+import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router-dom';
 import * as d3 from 'd3';
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from '@mui/icons-material/Star';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../Theme';
 import axios from 'axios';

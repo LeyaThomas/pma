@@ -7,9 +7,9 @@ import {
   TextField,
   Button,
   DialogActions,
-} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import Modal from "@material-ui/core/Modal";
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import Modal from "@mui/material/Modal";
 import axios from "axios";
 
 function ProjectButton() {
