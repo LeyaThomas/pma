@@ -28,7 +28,7 @@ const SignUp = () => {
     const fetchCompanies = async () => {
       
       try {
-        const response = await axios.get(process.env.REACT_APP_API_URL + '/users/companies'); 
+        const response = await axios.get(process.env.REACT_APP_API_URL + 'users/companies'); 
         setCompanies(response.data);
       } catch (error) {
         console.error('Failed to fetch companies:', error);
