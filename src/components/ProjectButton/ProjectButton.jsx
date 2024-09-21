@@ -39,7 +39,8 @@ function ProjectButton() {
   const handleCreateProject = () => {
     const employeeId = localStorage.getItem("cususerid");
     axios
-      .post("http://localhost:8000/projects/create/", {
+      .post(process.env.REACT_APP_API_URL + `projects/create`, {
+     
         name: projectName,
         objective: projectObjective,
         deadline: projectDeadline,
@@ -69,6 +70,7 @@ function ProjectButton() {
     console.log("Sending the following data to the server:", data);
   
     axios
+      .post(process.env.REACT_APP_API_URL + `projects/projectemployee`, data)
       .post("http://localhost:8000/projects/projectemployee/", data)
       .then((response) => {
         console.log(response.data);

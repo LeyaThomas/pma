@@ -24,22 +24,22 @@ const Dashboard = () => {
     const employeeId = localStorage.getItem("cususerid");
 
     // Fetch the user's data
-    axios.get(process.env.REACT_APP_API_URL + `/users/userdetail/${employeeId}/`)
+    axios.get(process.env.REACT_APP_API_URL + `users/userdetail/${employeeId}/`)
       .then(response => setUsername(response.data.name))
       .catch(error => console.error('Error:', error));
 
     // Fetch the total project count
-    axios.get(process.env.REACT_APP_API_URL + '/projects/projectcount/' )
+    axios.get(process.env.REACT_APP_API_URL + 'projects/projectcount/' )
       .then(response => setProjectCount(response.data.total_projects))
       .catch(error => console.error('Error:', error));
 
     // Fetch the total user count
-    axios.get(process.env.REACT_APP_API_URL + '/users/usercount/')
+    axios.get(process.env.REACT_APP_API_URL + 'users/usercount/')
       .then(response => setUserCount(response.data.total_users))
       .catch(error => console.error('Error:', error));
 
     // Fetch the my project count
-    axios.get(process.env.REACT_APP_API_URL + `/projects/projectcount/${employeeId}/`) // Use the employeeId in the API endpoint
+    axios.get(process.env.REACT_APP_API_URL + `projects/projectcount/${employeeId}/`) // Use the employeeId in the API endpoint
       .then(response => {
         setMyProjectCount(response.data.user_projects_count); // Assuming the response object has a total_projects property
       })

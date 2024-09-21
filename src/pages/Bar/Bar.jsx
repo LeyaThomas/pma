@@ -49,10 +49,10 @@ const BarChartPage = () => {
 
     useEffect(() => {
         console.log("Project ID: ", projectId);
-        axios.get(process.env.REACT_APP_API_URL + `/projects/project/${id}/marks/`)
+        axios.get(process.env.REACT_APP_API_URL + `projects/project/${id}/marks/`)
             .then(response => {
                 const markData = response.data;
-                return axios.get(process.env.REACT_APP_API_URL + `/projects/project/${id}/employees/`)
+                return axios.get(process.env.REACT_APP_API_URL + `projects/project/${id}/employees/`)
                     .then(response => {
                         const employeeData = response.data;
                         const transformedData = markData.map(item => {

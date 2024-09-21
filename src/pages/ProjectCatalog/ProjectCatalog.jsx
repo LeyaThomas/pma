@@ -24,7 +24,7 @@ const ProjectCatalog = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(process.env.REACT_APP_API_URL + `/projects/project/${id}/employees/`);
+        const response = await axios.get(process.env.REACT_APP_API_URL + `projects/project/${id}/employees/`);
         console.log(response.data);
         const data = response.data.map(item => {
           const employee = item.employee;

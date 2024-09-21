@@ -12,7 +12,7 @@ const Timeline = () => {
         const employeeId = localStorage.getItem('cususerid'); // Fetch the employee id from the local storage
 
         
-        axios.get(process.env.REACT_APP_API_URL + `/projects/employee/${employeeId}/projects/deadlines/`) // Use the employee id in the API call
+        axios.get(process.env.REACT_APP_API_URL + `projects/employee/${employeeId}/projects/deadlines/`) // Use the employee id in the API call
             .then(response => {
                 const timelineData = response.data.map(item => ({
                     period: item.project.deadline,

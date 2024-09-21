@@ -15,7 +15,7 @@ const UpdateHub = () => {
         question3: null,
         question4: null,
         question5: null,
-        // Add more questions as needed
+       
     });
     const [allAnswered, setAllAnswered] = useState(false);
     const [projects, setProjects] = useState([]);
@@ -52,7 +52,7 @@ const UpdateHub = () => {
     };
 
     const handleSubmit = () => {
-        // Send answers to backend
+       
         const employeeId = localStorage.getItem('cususerid');  // Fetch employee id from local storage
         if (employeeId) {
             const url = process.env.REACT_APP_API_URL + `/projects/employeeanswer/`;
@@ -81,12 +81,12 @@ const UpdateHub = () => {
 
     return (
         <Box style={{ width: '90%', marginTop: '-140px' }}>
-            <Header title="FiveQ Assess" variant="h1" style={{ fontSize: '5em', fontWeight: 'bold', color: colors.greenAccent[500] }} />
+            <Header title="FiveQ Assess" variant="h1" style={{ fontSize: '5em', fontWeight: 'bold', color: colors.gray[500] }} />
 
 
             <FormControl component="fieldset" style={{ width: '100%' }}>
-                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[100] }}>
-                    <Typography variant="h6" style={{ color: colors.greenAccent[500] }}>Have you completed all assigned tasks ?</Typography>
+                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[300] }}>
+                    <Typography variant="h6" style={{ color: colors.greenAccent[800] }}>Have you completed all assigned tasks ?</Typography>
                     <RadioGroup name="question1" value={answers.question1 === null ? '' : answers.question1 ? 'yes' : 'no'} onChange={handleChange}>
                         <FormControlLabel value="yes" control={<Radio />} label="Yes" style={{ color: '#fff' }} />
                         <FormControlLabel value="no" control={<Radio />} label="No" style={{ color: '#fff' }} />
@@ -94,8 +94,8 @@ const UpdateHub = () => {
                 </Paper>
 
 
-                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[100] }}>
-                    <Typography variant="h6" style={{ color: colors.greenAccent[500] }}>Are you confident in your ability to meet project deadlines?</Typography>
+                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[300] }}>
+                    <Typography variant="h6" style={{ color: colors.greenAccent[800] }}>Are you confident in your ability to meet project deadlines?</Typography>
                     <RadioGroup name="question2" value={answers.question2 === null ? '' : answers.question2 ? 'yes' : 'no'} onChange={handleChange}>
                         <FormControlLabel value="yes" control={<Radio />} label="Yes" style={{ color: '#fff' }} />
                         <FormControlLabel value="no" control={<Radio />} label="No" style={{ color: '#fff' }} />
@@ -103,8 +103,8 @@ const UpdateHub = () => {
                 </Paper>
 
 
-                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[100] }}>
-                    <Typography variant="h6" style={{ color: colors.greenAccent[500] }}>Have you actively participated in project meetings and discussions?</Typography>
+                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[300] }}>
+                    <Typography variant="h6" style={{ color: colors.greenAccent[800] }}>Have you actively participated in project meetings and discussions?</Typography>
                     <RadioGroup name="question3" value={answers.question3 === null ? '' : answers.question3 ? 'yes' : 'no'} onChange={handleChange}>
                         <FormControlLabel value="yes" control={<Radio />} label="Yes" style={{ color: '#fff' }} />
                         <FormControlLabel value="no" control={<Radio />} label="No" style={{ color: '#fff' }} />
@@ -112,8 +112,8 @@ const UpdateHub = () => {
                 </Paper>
 
 
-                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[100] }}>
-                    <Typography variant="h6" style={{ color: colors.greenAccent[500] }}>Have you adhered to project guidelines and standards in your work?</Typography>
+                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[300] }}>
+                    <Typography variant="h6" style={{ color: colors.greenAccent[800] }}>Have you adhered to project guidelines and standards in your work?</Typography>
                     <RadioGroup name="question4" value={answers.question4 === null ? '' : answers.question4 ? 'yes' : 'no'} onChange={handleChange}>
                         <FormControlLabel value="yes" control={<Radio />} label="Yes" style={{ color: '#fff' }} />
                         <FormControlLabel value="no" control={<Radio />} label="No" style={{ color: '#fff' }} />
@@ -121,8 +121,8 @@ const UpdateHub = () => {
                 </Paper>
 
 
-                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[100] }}>
-                    <Typography variant="h6" style={{ color: colors.greenAccent[500] }}>Are you satisfied with the level of support and resources provided for the project?</Typography>
+                <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px', width: '100%', backgroundColor: colors.gray[300] }}>
+                    <Typography variant="h6" style={{ color: colors.greenAccent[800] }}>Are you satisfied with the level of support and resources provided for the project?</Typography>
                     <RadioGroup name="question5" value={answers.question5 === null ? '' : answers.question5 ? 'yes' : 'no'} onChange={handleChange}>
                         <FormControlLabel value="yes" control={<Radio />} label="Yes" style={{ color: '#fff' }} />
                         <FormControlLabel value="no" control={<Radio />} label="No" style={{ color: '#fff' }} />
@@ -131,7 +131,7 @@ const UpdateHub = () => {
 
                 {/* Repeat for other questions */}
 
-                <Button variant="contained" style={{ backgroundColor: allAnswered ? colors.greenAccentAccent[500] : colors.greenAccent[300], width: '20%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} onClick={handleSubmit}>
+                <Button variant="contained" style={{ backgroundColor: allAnswered ? colors.greenAccentAccent[800] : colors.greenAccent[600], width: '20%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} onClick={handleSubmit}>
                     Submit
                 </Button>
             </FormControl>

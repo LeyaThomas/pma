@@ -14,7 +14,7 @@ const RealTimePieChart = () => {
     const employeeId = localStorage.getItem('cususerid'); // Get the employee ID from local storage
     if (employeeId) {
       
-      axios.get(process.env.REACT_APP_API_URL + `/projects/employee-projects/${employeeId}/`  )
+      axios.get(process.env.REACT_APP_API_URL + `projects/employee-projects/${employeeId}/`  )
         .then(response => {
           const projects = response.data;
           projects.sort((a, b) => {
